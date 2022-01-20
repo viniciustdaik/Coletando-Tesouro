@@ -57,6 +57,9 @@ function draw() {
   //código para reiniciar o plano de fundo
  
   if(gameState == END){
+    fill('cyan');
+    textSize(20);
+    text("Clique Para Tentar De Novo.", width/2-125, boy.y+55);
     if(touches.length > 0){
       touches = [];
       reset();
@@ -224,6 +227,7 @@ function reset(){
   boy.y = height;
   boy.changeAnimation("SahilRunning", boyImg);
   boy.scale = 0.08;
+  treasureCollection = 0;
 
   cashG.destroyEach();
   diamondsG.destroyEach();
