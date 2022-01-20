@@ -1,9 +1,9 @@
 var path,boy,cash,diamonds,jwellery,sword;
 var pathImg,boyImg,cashImg,diamondsImg,jwelleryImg,swordImg, iphoneImg, bombImg;
 var treasureCollection = 0;
-var cashG,diamondsG,jwelleryG,swordGroup, bombG, iphoneG;
+var cashG,diamondsG,jwelleryG,swordGroup, bombG, iphoneG, bombSound, swordSound;
 
-//Esttados de Jogo
+//Estados de Jogo.
 var PLAY=1;
 var END=0;
 var gameState=1;
@@ -18,50 +18,60 @@ function preload(){
   endImg =loadAnimation("fimdeJogo.png");
   iphoneImg = loadImage("iphone.jpg");
   bombImg = loadImage("bomb.png");
+  //bombSound = loadSound("");
+  //swordSound = loadSound("");
 }
 
 function setup(){
   
-//crie uma tela
+  //crie uma tela
 
- createCanvas(windowWidth,windowHeight);
+  createCanvas(windowWidth,windowHeight);
 
-//plano de fundo se movendo
+  //plano de fundo se movendo
 
-path=createSprite(width/2,200);
-path.addImage(pathImg);
-path.velocityY = 4;
+  path=createSprite(width/2,200);
+  path.addImage(pathImg);
+  path.velocityY = 4;
 
 
-//crie o menino correndo
-boy = createSprite(width/2,height-20,20,20);
-boy.addAnimation("SahilRunning",boyImg);
-boy.scale=0.08;
+  //crie o menino correndo
+  boy = createSprite(width/2,height-20,20,20);
+  boy.addAnimation("SahilRunning",boyImg); 
+  boy.addAnimation("End",endImg);
+  boy.scale=0.08;
   
-  
-cashG=new Group();
-diamondsG=new Group();
-jwelleryG=new Group();
-swordGroup=new Group();
-iphoneG = new Group();
-bombG = new Group();
+  edges= createEdgeSprites();
+
+  cashG=new Group();
+  diamondsG=new Group();
+  jwelleryG=new Group();
+  swordGroup=new Group();
+  iphoneG = new Group();
+  bombG = new Group();
 
 }
 
 function draw() {
-
-  if(gameState===PLAY){
-  background(0);
-  boy.x = World.mouseX;
-  
-  edges= createEdgeSprites();
-  boy.collide(edges);
   
   //código para reiniciar o plano de fundo
-
-   if(path.y > height ){
-     path.y = height/2;
-   }
+ 
+  if(gameState == END){
+    if(touches.length > 0){
+      touches = [];
+      reset();
+    }
+    if(mousePressedOver(path)||mousePressedOver(boy)){
+      reset();
+    }
+  }
+  if(gameState===PLAY){
+    background(0);
+    boy.x = World.mouseX;
+    if(path.y > height ){
+      path.y = height/2;
+    }
+    boy.collide(edges);
   
     createCash();
     createDiamonds();
@@ -69,6 +79,7 @@ function draw() {
     createSword();
     createBomb();
     createIphone();
+
     if (cashG.isTouching(boy)) {
       cashG.destroyEach();
       treasureCollection=treasureCollection + 50;
@@ -85,10 +96,11 @@ function draw() {
       iphoneG.destroyEach();
       treasureCollection= treasureCollection + 200;
     }else{
-      if(swordGroup.isTouching(boy)||bombG.isTouching(boy)) {
+      if(swordGroup.isTouching(boy)){//||bombG.isTouching(boy)) {
+        //swordSound.play();
         gameState=END;
         
-        boy.addAnimation("SahilRunning",endImg);
+        boy.addAnimation("End",endImg);
         boy.x=width/2;
         boy.y=height/2;
         boy.scale=0.6;
@@ -107,6 +119,30 @@ function draw() {
         bombG.setVelocityYEach(0);
         iphoneG.setVelocityYEach(0);
      
+    }else if(bombG.isTouching(boy)){
+      //bombSound.play();
+      gameState=END;
+        
+      boy.changeAnimation("End",endImg);
+      boy.x=width/2;
+      boy.y=height/2;
+      boy.scale=0.6;
+      
+      cashG.destroyEach();
+      diamondsG.destroyEach();
+      jwelleryG.destroyEach();
+      swordGroup.destroyEach();
+      bombG.destroyEach();
+      iphoneG.destroyEach();
+      
+      cashG.setVelocityYEach(0);
+      diamondsG.setVelocityYEach(0);
+      jwelleryG.setVelocityYEach(0);
+      swordGroup.setVelocityYEach(0);
+      bombG.setVelocityYEach(0);
+      iphoneG.setVelocityYEach(0);
+
+    }else{
     }
   }
   
@@ -180,4 +216,19 @@ function createBomb(){
   bomb.lifetime = 350;
   bombG.add(bomb);
   }
+}
+
+function reset(){
+  gameState = PLAY;
+  boy.x = width/2;
+  boy.y = height;
+  boy.changeAnimation("SahilRunning", boyImg);
+  boy.scale = 0.08;
+
+  cashG.destroyEach();
+  diamondsG.destroyEach();
+  jwelleryG.destroyEach();
+  swordGroup.destroyEach();
+  bombG.destroyEach();
+  iphoneG.destroyEach();
 }
