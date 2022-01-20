@@ -124,7 +124,7 @@ function createCash() {
   cash.addImage(cashImg);
   cash.scale=0.12;
   cash.velocityY = 5;
-  cash.lifetime = 200;
+  cash.lifetime = 350;
   cashG.add(cash);
   }
 }
@@ -135,7 +135,7 @@ function createDiamonds() {
   diamonds.addImage(diamondsImg);
   diamonds.scale=0.03;
   diamonds.velocityY = 5;
-  diamonds.lifetime = 200;
+  diamonds.lifetime = 350;
   diamondsG.add(diamonds);
 }
 }
@@ -146,7 +146,7 @@ function createJwellery() {
   jwellery.addImage(jwelleryImg);
   jwellery.scale=0.13;
   jwellery.velocityY = 5;
-  jwellery.lifetime = 200;
+  jwellery.lifetime = 350;
   jwelleryG.add(jwellery);
   }
 }
@@ -157,7 +157,7 @@ function createSword(){
   sword.addImage(swordImg);
   sword.scale=0.1;
   sword.velocityY = 4;
-  sword.lifetime = 200;
+  sword.lifetime = 350;
   swordGroup.add(sword);
   }
 }
@@ -167,7 +167,7 @@ function createIphone(){
   iphone.addImage(iphoneImg);
   iphone.scale=0.1;
   iphone.velocityY = 3;
-  iphone.lifetime = 200;
+  iphone.lifetime = 350;
   iphoneG.add(iphone);
   }
 }
@@ -177,7 +177,7 @@ function createBomb(){
   bomb.addImage(bombImg);
   bomb.scale=0.1;
   bomb.velocityY = 3;
-  bomb.lifetime = 200;
+  bomb.lifetime = 350;
   bombG.add(bomb);
   }
 }
