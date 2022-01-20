@@ -166,7 +166,7 @@ function createIphone(){
   var iphone = createSprite(Math.round(random(50, width-50),40, 10, 10));
   iphone.addImage(iphoneImg);
   iphone.scale=0.1;
-  iphone.velocityY = 3;
+  iphone.velocityY = 6;
   iphone.lifetime = 350;
   iphoneG.add(iphone);
   }
@@ -176,7 +176,7 @@ function createBomb(){
   var bomb = createSprite(Math.round(random(50, width-50),40, 10, 10));
   bomb.addImage(bombImg);
   bomb.scale=0.1;
-  bomb.velocityY = 3;
+  bomb.velocityY = 4.5;
   bomb.lifetime = 350;
   bombG.add(bomb);
   }
