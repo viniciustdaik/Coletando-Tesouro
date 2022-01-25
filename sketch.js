@@ -59,7 +59,7 @@ function draw() {
   if(gameState == END){
     fill('cyan');
     textSize(20);
-    text("Clique Para Tentar De Novo.", width/2-125, boy.y+55);
+    text("Clique/Toque Para Tentar De Novo.", width/2-145, boy.y+55);
     if(touches.length > 0){
       touches = [];
       reset();
