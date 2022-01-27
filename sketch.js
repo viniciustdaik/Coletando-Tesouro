@@ -104,7 +104,7 @@ function draw() {
         //swordSound.play();
         gameState=END;
         
-        boy.addAnimation("End",endImg);
+        boy.changeAnimation("End",endImg);
         boy.x=width/2;
         boy.y=height/2;
         boy.scale=0.6;
