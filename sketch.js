@@ -1,6 +1,7 @@
 var path,boy,cash,diamonds,jwellery,sword;
 var pathImg,boyImg,cashImg,diamondsImg,jwelleryImg,swordImg, iphoneImg, bombImg;
 var treasureCollection = 0;
+var hightreasureCollection = 0;
 var cashG,diamondsG,jwelleryG,swordGroup, bombG, iphoneG, bombSound, swordSound;
 
 //Estados de Jogo.
@@ -153,6 +154,7 @@ function draw() {
   textSize(20);
   fill('gold');
   text("Tesouro: "+ treasureCollection,width-150,30);
+  text("Maior Tesouro: "+ hightreasureCollection,width-370,30);
   }
 
 }
@@ -227,6 +229,9 @@ function reset(){
   boy.y = height;
   boy.changeAnimation("SahilRunning", boyImg);
   boy.scale = 0.08;
+  if(treasureCollection>hightreasureCollection){
+    hightreasureCollection = treasureCollection;
+  }
   treasureCollection = 0;
 
   cashG.destroyEach();
