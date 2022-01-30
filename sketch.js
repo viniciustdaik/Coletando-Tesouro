@@ -59,6 +59,7 @@ function draw() {
  
   if(gameState == END){
     fill('cyan');
+    stroke('lightblue');
     textSize(20);
     text("Clique/Toque Para Tentar De Novo.", width/2-145, boy.y+55);
     if(touches.length > 0){
@@ -153,6 +154,7 @@ function draw() {
   drawSprites();
   textSize(20);
   fill('gold');
+  stroke('green');
   text("Tesouro: "+ treasureCollection,width-150,30);
   text("Maior Tesouro: "+ hightreasureCollection,width-370,30);
   }
