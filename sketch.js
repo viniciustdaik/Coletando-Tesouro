@@ -1,15 +1,17 @@
-var path, boy, cash, diamonds, jwellery, sword;
+var path, boy;//, cash, diamonds, jwellery, sword;
 var pathImg, boyImg, powerimg, 
-cashImg, diamondsImg,  iphoneImg, coinimg, jwelleryImg, 
+cashImg, diamondsImg, jwelleryImg, iphoneImg, coinimg, 
 swordImg, bombImg;
 var treasureCollection = 0;
 var hightreasureCollection = 0;
-var cashG, diamondsG, jwelleryG, swordGroup, bombG, iphoneG, bombSound, swordSound;
+var cashG, diamondsG, jwelleryG, iphoneG, coinG, 
+swordGroup, bombG, 
+bombSound, swordSound;
 
 //Estados de Jogo.
-var PLAY=1;
-var END=0;
-var gameState=1;
+var PLAY = 1;
+var END = 0;
+var gameState = 1;
 
 function preload(){
   pathImg = loadImage("Road.png");
@@ -20,7 +22,7 @@ function preload(){
   diamondsImg = loadImage("./money/diamonds.png");
   jwelleryImg = loadImage("./money/jwell.png");
   swordImg = loadImage("sword.png");
-  endImg =loadAnimation("fimdeJogo.png");
+  endImg = loadAnimation("fimdeJogo.png");
   iphoneImg = loadImage("./money/iphone.jpg");
   bombImg = loadImage("./bomb/bomb.png");
   //bombSound = loadSound("");
@@ -29,24 +31,25 @@ function preload(){
 
 function setup(){
   //crie uma tela
-  createCanvas(windowWidth,windowHeight);
+  createCanvas(windowWidth, windowHeight);
 
   //plano de fundo se movendo
 
-  path=createSprite(width/2,200);
+  path = createSprite(width/2, 200);
   path.addImage(pathImg);
   path.velocityY = 4;
 
 
   //crie o menino correndo
-  boy = createSprite(width/2,height-20,20,20);
-  boy.addAnimation("SahilRunning",boyImg); 
-  boy.addAnimation("End",endImg);
-  boy.scale=0.08;
+  boy = createSprite(width/2, height-20, 20, 20);
+  boy.addAnimation("SahilRunning", boyImg); 
+  boy.addAnimation("End", endImg);
+  boy.scale = 0.08;
   
   edges = createEdgeSprites();
 
   cashG = new Group();
+  coinG = new Group();
   diamondsG = new Group();
   jwelleryG = new Group();
   swordGroup = new Group();
@@ -80,6 +83,7 @@ function draw() {
     boy.collide(edges);
   
     createCash();
+    createCoin();
     createDiamonds();
     createJwellery();
     createSword();
@@ -88,30 +92,32 @@ function draw() {
 
     if (cashG.isTouching(boy)) {
       cashG.destroyEach();
-      treasureCollection=treasureCollection + 50;
+      treasureCollection = treasureCollection + 50;
+    }else if(coinG.isTouching(boy)){
+      coinG.destroyEach();
+      treasureCollection = treasureCollection + 75;
     }
     else if (diamondsG.isTouching(boy)) {
       diamondsG.destroyEach();
-      treasureCollection=treasureCollection + 100;
-      
+      treasureCollection = treasureCollection + 100;
     }else if(jwelleryG.isTouching(boy)) {
       jwelleryG.destroyEach();
-      treasureCollection= treasureCollection + 150;
-      
+      treasureCollection = treasureCollection + 150;
     }else if(iphoneG.isTouching(boy)){
       iphoneG.destroyEach();
-      treasureCollection= treasureCollection + 200;
+      treasureCollection = treasureCollection + 200;
     }else{
       if(swordGroup.isTouching(boy)){//||bombG.isTouching(boy)) {
         //swordSound.play();
-        gameState=END;
+        gameState = END;
         
-        boy.changeAnimation("End",endImg);
-        boy.x=width/2;
-        boy.y=height/2;
-        boy.scale=0.6;
+        boy.changeAnimation("End", endImg);
+        boy.x = width/2;
+        boy.y = height/2;
+        boy.scale = 0.6;
         
         cashG.destroyEach();
+        coinG.destroyEach();
         diamondsG.destroyEach();
         jwelleryG.destroyEach();
         swordGroup.destroyEach();
@@ -119,6 +125,7 @@ function draw() {
         iphoneG.destroyEach();
         
         cashG.setVelocityYEach(0);
+        coinG.setVelocityYEach(0);
         diamondsG.setVelocityYEach(0);
         jwelleryG.setVelocityYEach(0);
         swordGroup.setVelocityYEach(0);
@@ -127,14 +134,15 @@ function draw() {
      
     }else if(bombG.isTouching(boy)){
       //bombSound.play();
-      gameState=END;
+      gameState = END;
         
-      boy.changeAnimation("End",endImg);
-      boy.x=width/2;
-      boy.y=height/2;
-      boy.scale=0.6;
+      boy.changeAnimation("End", endImg);
+      boy.x = width/2;
+      boy.y = height/2;
+      boy.scale = 0.6;
       
       cashG.destroyEach();
+      coinG.destroyEach();
       diamondsG.destroyEach();
       jwelleryG.destroyEach();
       swordGroup.destroyEach();
@@ -142,6 +150,7 @@ function draw() {
       iphoneG.destroyEach();
       
       cashG.setVelocityYEach(0);
+      coinG.setVelocityYEach(0);
       diamondsG.setVelocityYEach(0);
       jwelleryG.setVelocityYEach(0);
       swordGroup.setVelocityYEach(0);
@@ -164,65 +173,78 @@ function draw() {
 
 function createCash() {
   if (World.frameCount % 200 == 0) {
-  var cash = createSprite(Math.round(random(50, width-50),40, 10, 10));
-  cash.addImage(cashImg);
-  cash.scale=0.12;
-  cash.velocityY = 5;
-  cash.lifetime = 350;
-  cashG.add(cash);
+    var cash = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    cash.addImage("cashimage", cashImg);
+    cash.scale = 0.12;
+    cash.velocityY = 5;
+    cash.lifetime = 350;
+    cashG.add(cash);
+  }
+}
+
+function createCoin(){
+  if(World.frameCount % 320 == 0){
+    var coin = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    coin.addImage("coinimage", coinimg);
+    coin.scale = 0.6;
+    coin.velocityY = 5;
+    coin.lifetime = 350;
+    coinG.add(coin);
   }
 }
 
 function createDiamonds() {
-  if (World.frameCount % 320 == 0) {
-  var diamonds = createSprite(Math.round(random(50, width-50),40, 10, 10));
-  diamonds.addImage(diamondsImg);
-  diamonds.scale=0.03;
-  diamonds.velocityY = 5;
-  diamonds.lifetime = 350;
-  diamondsG.add(diamonds);
-}
+  if (World.frameCount % 410 == 0) {
+    var diamonds = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    diamonds.addImage("diamondsimage", diamondsImg);
+    diamonds.scale = 0.03;
+    diamonds.velocityY = 5;
+    diamonds.lifetime = 350;
+    diamondsG.add(diamonds);
+  }
 }
 
 function createJwellery() {
-  if (World.frameCount % 410 == 0) {
-  var jwellery = createSprite(Math.round(random(50, width-50),40, 10, 10));
-  jwellery.addImage(jwelleryImg);
-  jwellery.scale=0.13;
-  jwellery.velocityY = 5;
-  jwellery.lifetime = 350;
-  jwelleryG.add(jwellery);
+  if (World.frameCount % 670 == 0) {
+    var jwellery = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    jwellery.addImage("jwellimage", jwelleryImg);
+    jwellery.scale = 0.13;
+    jwellery.velocityY = 5;
+    jwellery.lifetime = 350;
+    jwelleryG.add(jwellery);
+  }
+}
+
+function createIphone(){
+  if (World.frameCount % 780 == 0) {
+    var iphone = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    iphone.addImage("iphoneimage", iphoneImg);
+    iphone.scale = 0.1;
+    iphone.velocityY = 6;
+    iphone.lifetime = 350;
+    iphoneG.add(iphone);
   }
 }
 
 function createSword(){
   if (World.frameCount % 530 == 0) {
-  var sword = createSprite(Math.round(random(50, width-50),40, 10, 10));
-  sword.addImage(swordImg);
-  sword.scale=0.1;
-  sword.velocityY = 4;
-  sword.lifetime = 350;
-  swordGroup.add(sword);
+    var sword = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    sword.addImage("swordimage", swordImg);
+    sword.scale=0.1;
+    sword.velocityY = 4;
+    sword.lifetime = 350;
+    swordGroup.add(sword);
   }
 }
-function createIphone(){
-  if (World.frameCount % 670 == 0) {
-  var iphone = createSprite(Math.round(random(50, width-50),40, 10, 10));
-  iphone.addImage(iphoneImg);
-  iphone.scale=0.1;
-  iphone.velocityY = 6;
-  iphone.lifetime = 350;
-  iphoneG.add(iphone);
-  }
-}
+
 function createBomb(){
   if (World.frameCount % 250 == 0) {
-  var bomb = createSprite(Math.round(random(50, width-50),40, 10, 10));
-  bomb.addImage(bombImg);
-  bomb.scale=0.1;
-  bomb.velocityY = 4.5;
-  bomb.lifetime = 350;
-  bombG.add(bomb);
+    var bomb = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    bomb.addImage("bombimage", bombImg);
+    bomb.scale=0.1;
+    bomb.velocityY = 4.5;
+    bomb.lifetime = 350;
+    bombG.add(bomb);
   }
 }
 
