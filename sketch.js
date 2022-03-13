@@ -254,12 +254,13 @@ function reset(){
   boy.y = height;
   boy.changeAnimation("SahilRunning", boyImg);
   boy.scale = 0.08;
-  if(treasureCollection>hightreasureCollection){
+  if(treasureCollection > hightreasureCollection){
     hightreasureCollection = treasureCollection;
   }
   treasureCollection = 0;
 
   cashG.destroyEach();
+  coinG.destroyEach();
   diamondsG.destroyEach();
   jwelleryG.destroyEach();
   swordGroup.destroyEach();
