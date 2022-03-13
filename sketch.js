@@ -1,5 +1,7 @@
 var path, boy, cash, diamonds, jwellery, sword;
-var pathImg, boyImg, cashImg, diamondsImg, jwelleryImg, swordImg, iphoneImg, bombImg, coinimg;
+var pathImg, boyImg, powerimg, 
+cashImg, diamondsImg,  iphoneImg, coinimg, jwelleryImg, 
+swordImg, bombImg;
 var treasureCollection = 0;
 var hightreasureCollection = 0;
 var cashG, diamondsG, jwelleryG, swordGroup, bombG, iphoneG, bombSound, swordSound;
@@ -12,6 +14,7 @@ var gameState=1;
 function preload(){
   pathImg = loadImage("Road.png");
   boyImg = loadAnimation("Runner-1.png","Runner-2.png");
+  powerimg = loadImage("power.png");
   cashImg = loadImage("./money/cash.png");
   coinimg = loadImage("./money/coin.png");
   diamondsImg = loadImage("./money/diamonds.png");
