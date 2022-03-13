@@ -1,8 +1,8 @@
-var path,boy,cash,diamonds,jwellery,sword;
-var pathImg,boyImg,cashImg,diamondsImg,jwelleryImg,swordImg, iphoneImg, bombImg;
+var path, boy, cash, diamonds, jwellery, sword;
+var pathImg, boyImg, cashImg, diamondsImg, jwelleryImg, swordImg, iphoneImg, bombImg, coinimg;
 var treasureCollection = 0;
 var hightreasureCollection = 0;
-var cashG,diamondsG,jwelleryG,swordGroup, bombG, iphoneG, bombSound, swordSound;
+var cashG, diamondsG, jwelleryG, swordGroup, bombG, iphoneG, bombSound, swordSound;
 
 //Estados de Jogo.
 var PLAY=1;
@@ -12,21 +12,20 @@ var gameState=1;
 function preload(){
   pathImg = loadImage("Road.png");
   boyImg = loadAnimation("Runner-1.png","Runner-2.png");
-  cashImg = loadImage("cash.png");
-  diamondsImg = loadImage("diamonds.png");
-  jwelleryImg = loadImage("jwell.png");
+  cashImg = loadImage("./money/cash.png");
+  coinimg = loadImage("./money/coin.png");
+  diamondsImg = loadImage("./money/diamonds.png");
+  jwelleryImg = loadImage("./money/jwell.png");
   swordImg = loadImage("sword.png");
   endImg =loadAnimation("fimdeJogo.png");
-  iphoneImg = loadImage("iphone.jpg");
-  bombImg = loadImage("bomb.png");
+  iphoneImg = loadImage("./money/iphone.jpg");
+  bombImg = loadImage("./bomb/bomb.png");
   //bombSound = loadSound("");
   //swordSound = loadSound("");
 }
 
 function setup(){
-  
   //crie uma tela
-
   createCanvas(windowWidth,windowHeight);
 
   //plano de fundo se movendo
@@ -42,12 +41,12 @@ function setup(){
   boy.addAnimation("End",endImg);
   boy.scale=0.08;
   
-  edges= createEdgeSprites();
+  edges = createEdgeSprites();
 
-  cashG=new Group();
-  diamondsG=new Group();
-  jwelleryG=new Group();
-  swordGroup=new Group();
+  cashG = new Group();
+  diamondsG = new Group();
+  jwelleryG = new Group();
+  swordGroup = new Group();
   iphoneG = new Group();
   bombG = new Group();
 
@@ -61,16 +60,15 @@ function draw() {
     fill('cyan');
     stroke('green');
     textSize(20);
-    text("Clique/Toque Para Tentar De Novo.", width/2-145, boy.y+55);
-    if(touches.length > 0){
+    text("Clique/Toque Para Tentar De Novo.", width/2-135 , boy.y+55);
+    if(mousePressedOver(path)
+    ||mousePressedOver(boy)
+    ||touches.length > 0){
+      reset();
       touches = [];
-      reset();
-    }
-    if(mousePressedOver(path)||mousePressedOver(boy)){
-      reset();
     }
   }
-  if(gameState===PLAY){
+  if(gameState === PLAY){
     background(0);
     boy.x = World.mouseX;
     if(path.y > height ){
