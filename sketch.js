@@ -66,7 +66,7 @@ function draw() {
     fill('cyan');
     stroke('green');
     textSize(20);
-    text("Clique/Toque Para Tentar De Novo.", width/2-135 , boy.y+55);
+    text("Clique/Toque Para Tentar De Novo.", width/2-155 , boy.y+55);
     if(mousePressedOver(path)
     ||mousePressedOver(boy)
     ||touches.length > 0){
