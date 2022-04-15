@@ -91,20 +91,45 @@ function draw() {
     createIphone();
 
     if (cashG.isTouching(boy)) {
-      cashG.destroyEach();
+      for(var cash of cashG){
+        if(cash.isTouching(boy)){
+          cash.destroy();
+        }
+      }
+      //cashG.destroyEach();
       treasureCollection = treasureCollection + 50;
     }else if(coinG.isTouching(boy)){
-      coinG.destroyEach();
+      for(var coin of coinG){
+        if(coin.isTouching(boy)){
+          coin.destroy();
+        }
+      }
+      //coinG.destroyEach();
       treasureCollection = treasureCollection + 75;
     }
     else if (diamondsG.isTouching(boy)) {
-      diamondsG.destroyEach();
+      for(diamonds of diamondsG){
+        if(diamonds.isTouching(boy)){
+          diamonds.destroy();
+        }
+      }
+      //diamondsG.destroyEach();
       treasureCollection = treasureCollection + 100;
     }else if(jwelleryG.isTouching(boy)) {
-      jwelleryG.destroyEach();
+      for(var jwellery of jwelleryG){
+        if(jwellery.isTouching(boy)){
+          jwellery.destroy();
+        }
+      }
+      //jwelleryG.destroyEach();
       treasureCollection = treasureCollection + 150;
     }else if(iphoneG.isTouching(boy)){
-      iphoneG.destroyEach();
+      for(var iphone of iphoneG){
+        if(iphone.isTouching(boy)){
+          iphone.destroy();
+        }
+      }
+      //iphoneG.destroyEach();
       treasureCollection = treasureCollection + 200;
     }else{
       if(swordGroup.isTouching(boy)){//||bombG.isTouching(boy)) {
@@ -165,15 +190,15 @@ function draw() {
   textSize(20);
   fill('gold');
   stroke('green');
-  text("Tesouro: "+ treasureCollection,width-150,30);
-  text("Maior Tesouro: "+ hightreasureCollection,width-370,30);
+  text("Tesouro: "+ treasureCollection, width-150, 30);
+  text("Maior Tesouro: "+ hightreasureCollection, width-370, 30);
   }
 
 }
 
 function createCash() {
   if (World.frameCount % 200 == 0) {
-    var cash = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var cash = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     cash.addImage("cashimage", cashImg);
     cash.scale = 0.12;
     cash.velocityY = 5;
@@ -184,7 +209,7 @@ function createCash() {
 
 function createCoin(){
   if(World.frameCount % 320 == 0){
-    var coin = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var coin = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     coin.addImage("coinimage", coinimg);
     coin.scale = 0.6;
     coin.velocityY = 5;
@@ -195,7 +220,7 @@ function createCoin(){
 
 function createDiamonds() {
   if (World.frameCount % 410 == 0) {
-    var diamonds = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var diamonds = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     diamonds.addImage("diamondsimage", diamondsImg);
     diamonds.scale = 0.03;
     diamonds.velocityY = 5;
@@ -206,7 +231,7 @@ function createDiamonds() {
 
 function createJwellery() {
   if (World.frameCount % 670 == 0) {
-    var jwellery = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var jwellery = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     jwellery.addImage("jwellimage", jwelleryImg);
     jwellery.scale = 0.13;
     jwellery.velocityY = 5;
@@ -217,7 +242,7 @@ function createJwellery() {
 
 function createIphone(){
   if (World.frameCount % 780 == 0) {
-    var iphone = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var iphone = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     iphone.addImage("iphoneimage", iphoneImg);
     iphone.scale = 0.1;
     iphone.velocityY = 6;
@@ -228,7 +253,7 @@ function createIphone(){
 
 function createSword(){
   if (World.frameCount % 530 == 0) {
-    var sword = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var sword = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     sword.addImage("swordimage", swordImg);
     sword.scale=0.1;
     sword.velocityY = 4;
@@ -239,7 +264,7 @@ function createSword(){
 
 function createBomb(){
   if (World.frameCount % 250 == 0) {
-    var bomb = createSprite(Math.round(random(50, width-50),40, 10, 10));
+    var bomb = createSprite(Math.round(random(50, width-50), 40, 10, 10));
     bomb.addImage("bombimage", bombImg);
     bomb.scale=0.1;
     bomb.velocityY = 4.5;
